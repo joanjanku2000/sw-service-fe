@@ -14,6 +14,8 @@ To run the application Docker must be installed.
 Using Bash Script
 ``./local_setup.sh``
 
+Front-end app can be accessed in
+`localhost:4200`
 
 Stop the containers:   ``docker compose down``
 
