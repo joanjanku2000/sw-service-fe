@@ -1,0 +1,53 @@
+<app-header></app-header>
+<div *ngIf="notFoundErrorMessage" class="success-banner">
+    🔻 Service NOT FOUND
+</div>
+
+<div class="service-container" *ngIf="appService">
+    <h2 class="section-title">Service Details</h2>
+
+   
+    <div class="update-button-bar">
+        <button class="update-btn" (click)="onUpdateService(appService.id)">
+            ✏️ Update Service
+        </button>
+        <button class="delete-btn" (click)="onDeleteService(appService.id)">
+            Delete Service
+        </button>
+    </div>
+
+       <div *ngIf="successMessageVisible" class="success-banner">
+            ✅ Service deleted successfully!
+        </div>
+        <div *ngIf="errorMessageVisible" class="success-banner">
+            🔻 Error during deletion!
+        </div>
+      
+    <div class="service">
+        <p><strong>ID:</strong> {{ appService.id }}</p>
+
+        <div class="resources">
+            <h3>Resources</h3>
+
+            <div *ngFor="let resource of appService?.resources; let i = index" class="resource">
+                <p>
+                    <strong>Resource ID:</strong> {{ resource?.id }}
+                    <button class="toggle-btn" (click)="toggleResource(i)">
+                        {{ expandedResources[i] ? 'Hide' : 'Show' }} Owners
+                    </button>
+                </p>
+
+                <div class="owners" *ngIf="expandedResources[i]">
+                    <h4>Owners</h4>
+
+                    <div *ngFor="let owner of resource?.owners" class="owner">
+                        <p><strong>ID:</strong> {{ owner?.id }}</p>
+                        <p><strong>Name:</strong> {{ owner?.name }}</p>
+                        <p><strong>Account Number:</strong> {{ owner?.accountNumber }}</p>
+                        <p><strong>Level:</strong> {{ owner?.level }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

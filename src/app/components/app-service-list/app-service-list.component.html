@@ -1,0 +1,37 @@
+<app-header></app-header>
+<div class="service-container" *ngIf="appServicePage">
+
+    <h2 class="section-title">All Services Listed</h2>
+
+    <div class="service">
+
+        <div *ngFor="let service of appServicePage?.content;" class="resource">
+            <p>
+                <strong>Service ID:</strong> {{ service?.id }}
+                <button class="toggle-btn" *ngIf="service?.id" (click)="navigateToDetailsPage(service.id!)"> Details
+                </button>
+            </p>
+
+        </div>
+    </div>
+
+    <div class="pagination-bar" *ngIf="appServicePage">
+        <p>
+            Page {{ appServicePage.number + 1}} of {{ appServicePage.totalPages }}
+        </p>
+
+        <div class="pagination-buttons" style="display: flex; justify-content: space-between;">
+            <button style="width: 40%;" class="next-btn" 
+            [disabled]="appServicePage.number + 1 >= appServicePage.totalPages"
+                (click)="loadNextPage()">
+                Next
+            </button>
+
+            <div></div>
+
+            <button  style="width: 58%;" class="previous-btn" [disabled]="appServicePage.number - 1 < 0" (click)="loadPreviousPage()">
+                Previous
+            </button>
+        </div>
+    </div>
+</div>
