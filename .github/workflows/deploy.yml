@@ -4,14 +4,10 @@ on: [push]
 
 jobs:
   trigger-build:
-    name: Trigger Clone and Build
+    name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository to the runner
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: SSH into VM and run script
+      - name: Build and Deploy
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VM_HOST }}
