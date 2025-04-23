@@ -31,6 +31,7 @@
 }
 
 .primary-btn,
+.primary-btn-disabled,
 .secondary-btn {
     padding: 0.6rem 1.4rem;
     font-size: 1rem;
@@ -41,12 +42,29 @@
     transition: background-color 0.2s ease-in-out, transform 0.1s ease;
 }
 
+
+
 .primary-btn {
     background-color: #1976d2;
     color: white;
 
     &:hover {
         background-color: #125ea3;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
+.primary-btn-disabled {
+    background-color: #e0e0e0;
+    color: #999;
+    // background-color: #1976d2;
+    // color: white;
+
+    &:hover {
+        background-color: #85c4ff;
     }
 
     &:active {

@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../shared/header/header.component';
 import { AppServiceService } from '../../services/appService.service';
 import { ActivatedRoute } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-app-service-create',
@@ -42,6 +44,7 @@ export class AppServiceCreateComponent implements OnInit {
 
   resources: Resource[] = [];
   owners: Owner[] = [];
+  errorMessage: string = '';
 
 
   constructor(private appServiceService: AppServiceService, private activatedRoute: ActivatedRoute) { }
@@ -57,6 +60,7 @@ export class AppServiceCreateComponent implements OnInit {
     } else { // create
       this.resetForm();
     }
+   
 
   }
 
@@ -67,25 +71,22 @@ export class AppServiceCreateComponent implements OnInit {
           version: this.appServiceVersion,
           resources: this.resources
         }
-      )
+      ).pipe( catchError((error) => this.handleError(error)))
         .subscribe({
           next: (response) => {
             this.handleSubmitSuccess();
-          },
-          error: (error) => {
-            this.handleSubmitError(error);
           }
         });
     } else {
       this.appServiceService.createAppService({ resources: this.resources })
-
+      .pipe(
+        catchError((error) => this.handleError(error))
+      )
         .subscribe({
           next: (response) => {
             this.handleSubmitSuccess();
-          },
-          error: (error) => {
-            this.handleSubmitError(error);
           }
+         
         }
         );
     }
@@ -169,15 +170,29 @@ export class AppServiceCreateComponent implements OnInit {
     this.resourceId = '';
   }
 
-  private handleSubmitError(error: any) {
-    this.successMessageVisible = false;
-    this.errorMessageVisible = true;
-    setTimeout(() => {
-      this.errorMessageVisible = false;
-    }, 3000);
-    console.error('API Error:', error.status);
-    console.error('Message', error.message);
+  private handleError(error: HttpErrorResponse) {
+      console.error('Status:', error.status);
+      console.error('Response body:', error.error);  
+      this.errorMessage = error.error.message || 'Something went wrong'
+      this.errorMessageVisible = true;
+      
+      setTimeout(() => {
+          this.errorMessageVisible = false;
+          this.errorMessage = '';
+        }, 3000);
+
+      return throwError(() => new Error(error.error.message || 'Something went wrong'));
   }
+
+  // private handleSubmitError(error: any) {
+  //   this.successMessageVisible = false;
+  //   this.errorMessageVisible = true;
+  //   setTimeout(() => {
+  //     this.errorMessageVisible = false;
+  //   }, 3000);
+  //   console.error('API Error:', error.status);
+ 
+  // }
 
   private handleSubmitSuccess() {
     this.successMessageVisible = true;

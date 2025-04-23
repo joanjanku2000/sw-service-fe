@@ -23,7 +23,7 @@
             🔻 Error during deletion!
         </div>
       
-    <div class="service">
+    <div class="service" *ngIf="deleted == false">
         <p><strong>ID:</strong> {{ appService.id }}</p>
 
         <div class="resources">

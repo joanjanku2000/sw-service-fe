@@ -4,7 +4,6 @@ import { AppServiceService } from '../../services/appService.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../shared/header/header.component';
-import { error } from 'console';
 
 @Component({
   selector: 'app-app-service-details',
@@ -21,6 +20,7 @@ export class AppServiceDetailsComponent implements OnInit {
   successMessageVisible = false;
   errorMessageVisible = false;
   notFoundErrorMessage = false;
+  deleted = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -72,8 +72,8 @@ export class AppServiceDetailsComponent implements OnInit {
 
   private handleSuccess() {
     this.successMessageVisible = true;
+    this.deleted = true;
     setTimeout(() => {
-
       this.router.navigate(['/services']);
     }, 3000);
   }

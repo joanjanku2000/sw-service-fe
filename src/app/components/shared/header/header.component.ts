@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent implements OnInit {
   constructor(private router: Router) { }
+
+  section = input<string>();
 
   ngOnInit(): void {
   }

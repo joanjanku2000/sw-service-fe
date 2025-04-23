@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { AppService } from "../models/service.model";
 import { AppServicePage } from "../models/servicePage.model";
 import { environment } from "../../environments/environment";
+import { ErrorResponse } from "../models/error.model";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AppServiceService {
    
     constructor(private http: HttpClient) {}
   
-    createAppService(appService: AppService): Observable<HttpResponse<AppService>>{
+    createAppService(appService: AppService): Observable<HttpResponse<AppService | ErrorResponse>>{
       return this.http.post<HttpResponse<AppService>>(this.apiUrl, appService);
     }
   

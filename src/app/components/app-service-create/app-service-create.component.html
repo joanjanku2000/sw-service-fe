@@ -1,18 +1,24 @@
-<app-header></app-header>
-<div>
-    <div class="page-container">
+<app-header [section]="'Create'"></app-header>
+
+<div class="page-container">
         <h2>Create a new service</h2>
 
         <div class="page-actions">
-            <button class="primary-btn" (click)="submitService()">🚀 Submit Service</button>
+            <button class="primary-btn" 
+            (click)="submitService()" 
+            *ngIf="resources.length > 0">🚀 Submit Service</button>
+
+            <button class="primary-btn-disabled"  *ngIf="resources.length == 0"
+            (click)="submitService()" [disabled]="true" >🚀 Submit Service</button>
+
             <button class="secondary-btn" (click)="openResourceModal()">➕ Add Resource</button>
         </div>
-
+    
         <div *ngIf="successMessageVisible" class="success-banner">
             ✅ Service submitted successfully!
         </div>
         <div *ngIf="errorMessageVisible" class="success-banner">
-            🔻 Error during submission!
+            🔻 {{  errorMessage }}
         </div>
 
 
@@ -35,10 +41,10 @@
             </ul>
         </div>
 
-    </div>
+</div>
 
 
-    <div class="modal-backdrop" *ngIf="showResourceModal">
+<div class="modal-backdrop" *ngIf="showResourceModal">
         <div class="modal">
             <h3>Add Resource</h3>
 
@@ -82,7 +88,7 @@
 
 
         </div>
-    </div>
+</div>
 
 
 <div class="modal-backdrop" *ngIf="showUpdateOwnersModal">
@@ -113,7 +119,5 @@
         <button (click)="closeUpdateOwnersModal()">✖ Cancel</button>
       </div>
     </div>
-  </div>
-  
-
 </div>
+  
